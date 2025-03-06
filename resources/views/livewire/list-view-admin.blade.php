@@ -5,6 +5,9 @@
             {{ __('Manage Items') }}
         </h2>
     </x-slot>
+    <div class="mt-4 p-4 text-right">
+    <a href="{{ route('admin.items.add') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Add New Item</a>
+</div>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -59,24 +62,6 @@
                 @else
                     <p class="text-center p-4">No items available.</p>
                 @endif
-            </div>
-        </div>
-    </div>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <form wire:submit.prevent="addItem">
-                    <div class="mt-4 p-4 border-t">
-                        <h3 class="font-semibold mb-2">Add New Item</h3>
-                        <input type="text" wire:model="newItem" placeholder="Item name"
-                            class="border rounded p-2 mb-2 w-full"/>
-                        <input type="file" wire:model="newImage" class="border rounded p-2 mb-2 w-full"/>
-                        @error('newImage') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-
-                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Add</button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>

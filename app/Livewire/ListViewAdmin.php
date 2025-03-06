@@ -45,28 +45,6 @@ class ListViewAdmin extends Component
         $this->mount();
     }
 
-    public function updateItem()
-    {
-        $this->validate([
-            'editName' => 'required|string|max:255',
-            'editImage' => 'nullable|image|max:2048'
-        ]);
-
-        $item = Item::findOrFail($this->editItem);
-        $item->update(['name' => $this->editName]);
-
-        if ($this->editImage) {
-            $imagePath = $this->editImage->store('items', 'public');
-            ItemImage::updateOrCreate(
-                ['item_id' => $item->id],
-                ['image_path' => $imagePath]
-            );
-        }
-
-        $this->reset(['editItem', 'editName', 'editImage']);
-        $this->mount();
-    }
-
     public function deleteItem($id)
     {
         Item::destroy($id);
