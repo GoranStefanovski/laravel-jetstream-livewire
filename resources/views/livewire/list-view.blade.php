@@ -9,8 +9,7 @@
             <div class="absolute w-full bg-white border rounded shadow mt-1 z-10">
                 <ul>
                     @foreach ($suggestions as $suggestion)
-                        <li class="p-2 hover:bg-gray-200 cursor-pointer"
-                            wire:click="selectSuggestion('{{ $suggestion['name'] }}')">
+                        <li class="p-2 hover:bg-gray-200 cursor-pointer">
                             {{ $suggestion['name'] }}
                         </li>
                     @endforeach
@@ -24,7 +23,7 @@
     </div>
 
     <ul class="mb-4">
-        @if (isSet($items) && $items = [])
+        @if (isSet($items) && $items != [])
             @foreach ($items as $item)
                 <li class="mb-2 text-black border-b pb-2">
                     {{ $item['name'] }}
