@@ -14,6 +14,7 @@
                         <thead>
                             <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                                 <th class="py-3 px-6 text-left">ID</th>
+                                <th class="py-3 px-6 text-left">Image</th>
                                 <th class="py-3 px-6 text-left">Name</th>
                                 <th class="py-3 px-6 text-center">Actions</th>
                             </tr>
@@ -22,13 +23,26 @@
                             @foreach ($this->items as $item)
                                 <tr class="border-b border-gray-200 hover:bg-gray-100">
                                     <td class="py-3 px-6 text-left">{{ $item['id'] }}</td>
+
+                                    <!-- Display Image if Exists -->
+                                    <td class="py-3 px-6 text-left">
+                                        @if (isset($item['image']['image_path']))
+                                            <img src="{{ asset('storage/' . $item['image']['image_path']) }}" class="w-12 h-12 rounded" />
+                                        @else
+                                            <img src="https://via.placeholder.com/48" class="w-12 h-12 rounded" />
+                                        @endif
+                                    </td>
+
                                     <td class="py-3 px-6 text-left">
                                         @if ($this->editItem === $item['id'])
                                             <input type="text" wire:model="editName" class="border rounded p-1"/>
+                                            <input type="file" wire:model="editImage" class="border rounded p-1 mt-2"/>
+                                            @error('editImage') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                         @else
                                             {{ $item['name'] }}
                                         @endif
                                     </td>
+
                                     <td class="py-3 px-6 text-center">
                                         @if ($this->editItem === $item['id'])
                                             <button wire:click="updateItem" class="bg-green-500 text-white px-2 py-1 rounded">Save</button>
@@ -45,12 +59,24 @@
                 @else
                     <p class="text-center p-4">No items available.</p>
                 @endif
+            </div>
+        </div>
+    </div>
 
-                <div class="mt-4 p-4">
-                    <input type="text" wire:model="newItem" placeholder="Add new item"
-                        class="border rounded p-2 mb-2"/>
-                    <button wire:click="addItem" class="bg-blue-500 text-white px-4 py-2 rounded">Add</button>
-                </div>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <form wire:submit.prevent="addItem">
+                    <div class="mt-4 p-4 border-t">
+                        <h3 class="font-semibold mb-2">Add New Item</h3>
+                        <input type="text" wire:model="newItem" placeholder="Item name"
+                            class="border rounded p-2 mb-2 w-full"/>
+                        <input type="file" wire:model="newImage" class="border rounded p-2 mb-2 w-full"/>
+                        @error('newImage') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Add</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

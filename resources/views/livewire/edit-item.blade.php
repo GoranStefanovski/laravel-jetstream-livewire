@@ -22,6 +22,28 @@
                             @error('name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                         </div>
 
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Current Image:</label>
+                            @if ($currentImage)
+                                <img src="{{ asset('storage/' . $currentImage) }}" class="w-24 h-24 rounded mb-2" />
+                            @else
+                                <p class="text-gray-500">No image available.</p>
+                            @endif
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Upload New Image:</label>
+                            <input type="file" wire:model="newImage" class="border rounded w-full p-2"/>
+                            @error('newImage') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            
+                            @if ($newImage)
+                                <div class="mt-2">
+                                    <p class="text-gray-700 text-sm mb-1">New Image Preview:</p>
+                                    <img src="{{ $newImage->temporaryUrl() }}" class="w-24 h-24 rounded mb-2" />
+                                </div>
+                            @endif
+                        </div>
+
                         <div class="flex items-center gap-2">
                             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Update</button>
                             <a wire:navigate href="/list-view" class="bg-gray-500 text-white px-4 py-2 rounded">Cancel</a>

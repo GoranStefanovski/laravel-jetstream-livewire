@@ -25,8 +25,17 @@
     <ul class="mb-4">
         @if (isSet($items) && $items != [])
             @foreach ($items as $item)
-                <li class="mb-2 text-black border-b pb-2">
-                    {{ $item['name'] }}
+                <li class="mb-2 text-black border-b pb-2 flex items-center">
+                    <div class="mb-4">
+                        @if ($item['image'])
+                            <img src="{{ asset('storage/' . $item['image']['image_path']) }}" class="w-24 h-24 rounded mb-2 max-w-[120px] max-h-[120px]" />
+                        @else
+                            <p class="text-gray-500">--</p>
+                        @endif
+                    </div>
+                    <div class="ml-12">
+                        {{ $item['name'] }}
+                    </div>
                 </li>
             @endforeach
         @else

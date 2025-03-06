@@ -22,7 +22,7 @@ class ListView extends Component
 
     public function mount()
     {
-        $this->items = Item::all()->toArray();
+        $this->items = Item::with('image')->get()->toArray();
     }
 
     public function render()

@@ -2,67 +2,75 @@
 
 namespace App\Livewire;
 
+
 use App\Models\Item;
+use App\Models\ItemImage;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class ListViewAdmin extends Component
 {
+    use WithFileUploads;
+
     public $items = [];
     public $newItem = '';
+    public $newImage;
     public $editItem = null;
     public $editName = '';
+    public $editImage;
 
     public function mount()
     {
-        $this->items = Item::all()->toArray();
+        $this->items = Item::with('image')->get()->toArray();
     }
 
     public function addItem()
     {
-        if (!empty($this->newItem)) {
-            $item = Item::create(['name' => $this->newItem]);
-            $this->items[] = $item->toArray();
-            $this->newItem = '';
+        $this->validate([
+            'newItem' => 'required|string|max:255',
+            'newImage' => 'nullable|image|max:2048'
+        ]);
+
+        $item = Item::create(['name' => $this->newItem]);
+
+        if ($this->newImage) {
+            $imagePath = $this->newImage->store('items', 'public');
+            ItemImage::create([
+                'item_id' => $item->id,
+                'image_path' => $imagePath,
+            ]);
         }
+
+        $this->reset(['newItem', 'newImage']);
+        $this->mount();
+    }
+
+    public function updateItem()
+    {
+        $this->validate([
+            'editName' => 'required|string|max:255',
+            'editImage' => 'nullable|image|max:2048'
+        ]);
+
+        $item = Item::findOrFail($this->editItem);
+        $item->update(['name' => $this->editName]);
+
+        if ($this->editImage) {
+            $imagePath = $this->editImage->store('items', 'public');
+            ItemImage::updateOrCreate(
+                ['item_id' => $item->id],
+                ['image_path' => $imagePath]
+            );
+        }
+
+        $this->reset(['editItem', 'editName', 'editImage']);
+        $this->mount();
     }
 
     public function deleteItem($id)
     {
         Item::destroy($id);
-        $this->items = array_filter($this->items, fn($item) => $item['id'] !== $id);
-    }
-
-    public function editItem($id)
-    {
-        $item = collect($this->items)->firstWhere('id', $id);
-        if ($item) {
-            $this->editItem = $id;
-            $this->editName = $item['name'];
-        }
-    }
-
-    public function updateItem()
-    {
-        if ($this->editItem && !empty($this->editName)) {
-            $item = Item::find($this->editItem);
-            if ($item) {
-                $item->update(['name' => $this->editName]);
-                foreach ($this->items as &$localItem) {
-                    if ($localItem['id'] === $this->editItem) {
-                        $localItem['name'] = $this->editName;
-                        break;
-                    }
-                }
-            }
-            $this->reset('editItem');
-            $this->reset('editName');
-        }
-    }
-
-    public function cancelEdit()
-    {
-        $this->reset('editItem');
-        $this->reset('editName');
+        $this->mount();
     }
 
     public function render()

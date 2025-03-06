@@ -11,4 +11,9 @@ class Item extends Model
 
     // Specify the fields that can be mass-assigned
     protected $fillable = ['name'];
+
+    public function image()
+    {
+        return $this->hasOne(ItemImage::class);
+    }
 }
