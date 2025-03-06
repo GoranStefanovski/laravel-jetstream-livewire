@@ -45,7 +45,7 @@ class EditItem extends Component
             $this->currentImage = $imagePath;
         }
 
-        return redirect()->route('list-view');
+        $this->redirect('/list-view', navigate: true);
     }
 
     public function render()

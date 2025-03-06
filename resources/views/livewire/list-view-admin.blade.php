@@ -6,7 +6,7 @@
         </h2>
     </x-slot>
     <div class="mt-4 p-4 text-right">
-    <a href="{{ route('admin.items.add') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Add New Item</a>
+    <a wire:navigate href="{{ route('admin.items.add') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Add New Item</a>
 </div>
 
     <div class="py-12">

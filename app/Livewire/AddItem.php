@@ -32,7 +32,7 @@ class AddItem extends Component
         }
 
         session()->flash('message', 'Item added successfully!');
-        return redirect()->route('list-view');
+        $this->redirect('/list-view', navigate: true);
     }
 
     public function render()

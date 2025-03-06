@@ -7,6 +7,9 @@ use App\Livewire\AddItem;
 use App\Livewire\ListView;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+use App\Livewire\UserList;
+use App\Livewire\AddUser;
+use App\Livewire\EditUser;
 
 Route::get('/', ListView::class)->name('home');
 
@@ -33,4 +36,21 @@ Route::middleware([
     Route::get('/list-view',ListViewAdmin::class)->name('list-view');
     Route::get('items/edit/{id}', EditItem::class)->name('admin.items.edit');
     Route::get('items/add', AddItem::class)->name('admin.items.add');
+
+    Route::middleware('user.access')->group(function () {
+        Route::get('/users', UserList::class)->name('admin.users');
+        Route::get('/users/add', AddUser::class)->name('admin.users.add');
+        Route::get('/users/edit/{id}', EditUser::class)->name('admin.users.edit');
+    });
+});
+
+Route::middleware([
+    'auth:sanctum',
+    'user.access',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/users', UserList::class)->name('admin.users');
+    Route::get('/users/add', AddUser::class)->name('admin.users.add');
+    Route::get('/users/edit/{id}', EditUser::class)->name('admin.users.edit');
 });

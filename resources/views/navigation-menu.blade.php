@@ -18,6 +18,9 @@
                     <x-nav-link href="{{ route('list-view') }}" :active="request()->routeIs('list-view')">
                         {{ __('List View') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('admin.users') }}" :active="request()->routeIs('admin.users*')">
+                        {{ __('Users') }}
+                    </x-nav-link>
                 </div>
             </div>
 
