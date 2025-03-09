@@ -9,6 +9,11 @@
     <a wire:navigate href="{{ route('admin.items.add') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Add New Item</a>
 </div>
 
+    @if (session()->has('message'))
+        <div class="bg-green-200 text-green-800 p-2 rounded mb-4">
+            {{ session('message') }}
+        </div>
+    @endif
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">

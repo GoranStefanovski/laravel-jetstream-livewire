@@ -30,7 +30,10 @@
                             @if ($image)
                                 <div class="mt-2">
                                     <p class="text-gray-700 text-sm mb-1">New Image Preview:</p>
-                                    <img src="{{ $image->temporaryUrl() }}" class="w-24 h-24 rounded mb-2" />
+                                    @if ($image && in_array($image->getClientOriginalExtension(), ['jpg', 'jpeg', 'png', 'gif']))
+                                        <img src="{{ $image->temporaryUrl() }}" class="w-24 h-24 rounded mb-2" />
+                                    @endif
+
                                 </div>
                             @endif
                         </div>

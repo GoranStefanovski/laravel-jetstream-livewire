@@ -18,7 +18,7 @@ class AddItem extends Component
     {
         $this->validate([
             'name' => 'required|string|max:255',
-            'image' => 'nullable|image|max:2048'
+            'image' => 'nullable|mimes:jpg,jpeg,png|max:2048'
         ]);
 
         $item = Item::create(['name' => $this->name]);
