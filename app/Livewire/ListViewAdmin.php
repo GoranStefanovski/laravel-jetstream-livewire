@@ -48,6 +48,7 @@ class ListViewAdmin extends Component
     public function deleteItem($id)
     {
         Item::destroy($id);
+        session()->flash('message', 'Item deleted successfully!');
         $this->mount();
     }
 

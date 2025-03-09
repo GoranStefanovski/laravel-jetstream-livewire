@@ -45,6 +45,7 @@ class EditItem extends Component
             $this->currentImage = $imagePath;
         }
 
+        session()->flash('message', 'Item updated successfully!');
         $this->redirect('/list-view', navigate: true);
     }
 
