@@ -1,5 +1,4 @@
 # Project Setup
-Go to branch: "change-main-layout-app" to have navbar on main page - in the branch changes are made in app.blade in components \
 laravel new \
 composer require laravel/jetstream
 
@@ -42,6 +41,8 @@ user_access
           - password
           - role
 
+## Cart
+    - add/delete items in cart
 
 # Main Routes:
 
