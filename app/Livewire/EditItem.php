@@ -13,6 +13,7 @@ class EditItem extends Component
 
     public $itemId;
     public $name;
+    public $price;
     public $currentImage;
     public $newImage;
 
@@ -21,6 +22,7 @@ class EditItem extends Component
         $item = Item::with('image')->findOrFail($id);
         $this->itemId = $item->id;
         $this->name = $item->name;
+        $this->price = $item->price;
         $this->currentImage = optional($item->image)->image_path;
     }
 
@@ -28,11 +30,12 @@ class EditItem extends Component
     {
         $this->validate([
             'name' => 'required|string|max:255',
+            'price' => 'required|max:999',
             'newImage' => 'nullable|image|max:2048'
         ]);
 
         $item = Item::findOrFail($this->itemId);
-        $item->update(['name' => $this->name]);
+        $item->update(['name' => $this->name, 'price' => $this->price]);
 
         if ($this->newImage) {
             $imagePath = $this->newImage->store('items', 'public');

@@ -10,8 +10,11 @@
                 <ul>
                     @foreach ($suggestions as $suggestion)
                         <li class="p-2 hover:bg-gray-200 cursor-pointer">
-                            {{ $suggestion['name'] }}
+                            {{ $suggestion['name'] }} | ${{ $suggestion['price'] }}
                         </li>
+                        <button wire:click="addToCart({{ $suggestion['id'] }})" class="ml-4 bg-blue-500 text-black px-4 py-2 mt-2 rounded">
+                            Add to Cart
+                        </button>
                     @endforeach
                 </ul>
             </div>
@@ -36,6 +39,12 @@
                     <div class="ml-12">
                         {{ $item['name'] }}
                     </div>
+                    <div class="ml-12">
+                        ${{ $item['price'] }}
+                    </div>
+                    <button wire:click="addToCart({{ $item['id'] }})" class="ml-4 bg-blue-500 text-black px-4 py-2 mt-2 rounded">
+                        Add to Cart
+                    </button>
                 </li>
             @endforeach
         @else

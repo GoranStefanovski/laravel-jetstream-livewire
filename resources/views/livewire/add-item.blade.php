@@ -23,6 +23,12 @@
                         </div>
 
                         <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Price:</label>
+                            <input type="number" wire:model="price" class="border rounded w-full p-2"/>
+                            @error('price') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2">Upload Image:</label>
                             <input type="file" wire:model="image" class="border rounded w-full p-2"/>
                             @error('image') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror

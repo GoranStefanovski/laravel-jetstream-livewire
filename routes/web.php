@@ -10,8 +10,10 @@ use Livewire\Volt\Volt;
 use App\Livewire\UserList;
 use App\Livewire\AddUser;
 use App\Livewire\EditUser;
+use App\Livewire\Cart;
 
 Route::get('/', ListView::class)->name('home');
+Route::get('/cart', Cart::class)->name('cart');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
