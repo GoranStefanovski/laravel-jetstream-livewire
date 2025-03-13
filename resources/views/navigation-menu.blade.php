@@ -1,11 +1,12 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+@if (Auth::user() !== null)
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('home') }}">
                         <x-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
@@ -20,6 +21,9 @@
                     </x-nav-link>
                     <x-nav-link href="{{ route('admin.users') }}" :active="request()->routeIs('admin.users*')">
                         {{ __('Users') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('cart') }}" :active="request()->routeIs('cart')">
+                        <livewire:cart-counter />
                     </x-nav-link>
                 </div>
             </div>
@@ -225,4 +229,6 @@
             </div>
         </div>
     </div>
+@endif
+
 </nav>

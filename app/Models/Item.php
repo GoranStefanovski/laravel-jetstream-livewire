@@ -10,7 +10,7 @@ class Item extends Model
     use HasFactory;
 
     // Specify the fields that can be mass-assigned
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'price'];
 
     public function image()
     {

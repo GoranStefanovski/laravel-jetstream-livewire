@@ -24,6 +24,7 @@
                                 <th class="py-3 px-6 text-left">ID</th>
                                 <th class="py-3 px-6 text-left">Image</th>
                                 <th class="py-3 px-6 text-left">Name</th>
+                                <th class="py-3 px-6 text-left">Price</th>
                                 <th class="py-3 px-6 text-center">Actions</th>
                             </tr>
                         </thead>
@@ -42,23 +43,16 @@
                                     </td>
 
                                     <td class="py-3 px-6 text-left">
-                                        @if ($this->editItem === $item['id'])
-                                            <input type="text" wire:model="editName" class="border rounded p-1"/>
-                                            <input type="file" wire:model="editImage" class="border rounded p-1 mt-2"/>
-                                            @error('editImage') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                                        @else
                                             {{ $item['name'] }}
-                                        @endif
+                                    </td>
+
+                                    <td class="py-3 px-6 text-left">
+                                            {{ $item['price'] }}
                                     </td>
 
                                     <td class="py-3 px-6 text-center">
-                                        @if ($this->editItem === $item['id'])
-                                            <button wire:click="updateItem" class="bg-green-500 text-white px-2 py-1 rounded">Save</button>
-                                            <button wire:click="cancelEdit" class="bg-gray-500 text-white px-2 py-1 rounded">Cancel</button>
-                                        @else
                                             <a wire:navigate href="{{ route('admin.items.edit', $item['id']) }}" class="text-blue-500 hover:underline">Edit</a>
                                             <button wire:click="deleteItem({{ $item['id'] }})" class="text-red-500 hover:underline ml-2">Delete</button>
-                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

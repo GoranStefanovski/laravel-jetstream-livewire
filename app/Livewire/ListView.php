@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Item;
 use Livewire\Component;
+use Illuminate\Support\Facades\Session;
 
 class ListView extends Component
 {
@@ -18,6 +19,34 @@ class ListView extends Component
         } else {
             $this->suggestions = [];
         }
+    }
+
+    public function addToCart($itemId)
+    {
+        $item = Item::find($itemId);
+        if (!$item) {
+            return;
+        }
+
+        $cart = Session::get('cart', []);
+
+        if (isset($cart[$itemId])) {
+            $cart[$itemId]['quantity']++;
+        } else {
+            $cart[$itemId] = [
+                'id' => $item->id,
+                'name' => $item->name,
+                'price' => $item->price ?? 0,
+                'quantity' => 1,
+                'image' => $item->image->image_path ?? null
+            ];
+        }
+
+        Session::put('cart', $cart);
+        $this->cart = $cart;
+
+        // Dispatch an event to update the cart counter and UI
+        $this->dispatch('cartUpdated');
     }
 
     public function mount()
